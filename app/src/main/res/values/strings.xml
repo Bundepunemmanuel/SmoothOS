@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">SmoothOS</string>
+    <string name="dashboard_subtitle">System &amp; Network Performance Diagnostics</string>
+    <string name="device_compatibility_title">Device Hardware Profile</string>
+    <string name="infinix_smart8_target">Infinix Smart 8 Target Profile</string>
+    
+    <!-- Navigation Tabs -->
+    <string name="nav_dashboard">Overview</string>
+    <string name="nav_memory">Memory &amp; CPU</string>
+    <string name="nav_storage">Storage</string>
+    <string name="nav_thermal">Thermal</string>
+    <string name="nav_network">Network Test</string>
+
+    <!-- Metrics Labels -->
+    <string name="metric_ram_title">System RAM Pressure</string>
+    <string name="metric_measured_badge">DIRECTLY MEASURED</string>
+    <string name="metric_estimated_badge">CALCULATED ESTIMATE</string>
+    <string name="metric_storage_title">Internal Storage</string>
+    <string name="metric_thermal_title">Thermal &amp; Throttling Status</string>
+    <string name="metric_network_title">Active Connectivity</string>
+
+    <!-- Diagnostic Action Buttons -->
+    <string name="btn_run_diagnostics">Run Full Diagnostic</string>
+    <string name="btn_refresh">Refresh Metrics</string>
+    <string name="btn_test_network">Run Speed &amp; Latency Test</string>
+    <string name="btn_check_apps">Inspect High-Memory Apps</string>
+    
+    <!-- Optimization Insights -->
+    <string name="advice_title">SmoothOS System Advice</string>
+    <string name="permission_usage_rationale">Usage access allows SmoothOS to identify which applications consume high foreground resources without guessing or killing apps prematurely.</string>
+    <string name="permission_location_rationale">Android 14 requires location permission to read Wi-Fi network SSID and signal strength.</string>
+</resources>
