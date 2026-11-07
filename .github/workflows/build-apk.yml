@@ -1,0 +1,73 @@
+name: Build SmoothOS APK
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Build Standalone Android APK
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      - name: Set up Java JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
+
+      - name: Grant Execute Permission to Gradle Wrapper
+        run: chmod +x gradlew
+
+      - name: Build Debug APK
+        run: ./gradlew assembleDebug --stacktrace
+
+      - name: Copy and Rename APK
+        run: |
+          mkdir -p build-output
+          cp app/build/outputs/apk/debug/app-debug.apk build-output/SmoothOS-v1.0.0.apk
+          ls -lh build-output/
+
+      - name: Upload Standalone APK Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: SmoothOS-v1.0.0-APK
+          path: build-output/SmoothOS-v1.0.0.apk
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Create GitHub Release with APK (on tag or main push)
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+        uses: softprops/action-gh-release@v2
+        with:
+          files: build-output/SmoothOS-v1.0.0.apk
+          tag_name: v1.0.0
+          name: SmoothOS v1.0.0 - Standalone APK
+          body: |
+            ### SmoothOS Native Android 14 Application
+            Target Device: Infinix Smart 8 (2GB RAM, ARM64)
+            
+            **Features included in this build:**
+            - Genuine native Kotlin code with Material3 UI
+            - Memory & RAM pressure directly measured via ActivityManager
+            - Thermal & CPU throttling monitoring
+            - StatFs flash storage breakdown
+            - Real socket ping, jitter, packet loss & DNS latency diagnostics
+            - Zero fake RAM boosters or background battery drains
+            
+            **Installation:**
+            1. Download `SmoothOS-v1.0.0.apk` below directly to your phone.
+            2. Open the file to install (Enable 'Install unknown apps' if prompted).
+        continue-on-error: true
